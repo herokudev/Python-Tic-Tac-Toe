@@ -1,14 +1,16 @@
 # First step printing UI
 
-def drawFields():
+def drawFields(field):
     for row in range(5):
         if row % 2 == 0:
-            for column in range(5):
-                if column % 2 == 0:
+            fieldRow = int(row / 2)
+            for column in range(5):  # 0,1,2,3,4 --> 0,.,1,.,2
+                if column % 2 == 0:  # 0,2,4
+                    fieldColumn = int(column / 2)  # 0,1,2
                     if column != 4:
-                        print(" ", end="")
+                        print(field[fieldColumn][fieldRow], end="")
                     else:
-                        print(" ")
+                        print(field[fieldColumn][fieldRow])
                 else:
                     print("|", end="")
         else:
@@ -17,16 +19,17 @@ def drawFields():
 
 Player = 1
 currentField = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
-
+drawFields(currentField)
 while(True):
     print("Player turn: ", Player)
-    MoveType = input("Enter your move type(X/O): ")
     MoveRow = int(input("Please enter the row: "))
     MoveColumn = int(input("Please enter the column: "))
     if Player == 1:
-        currentField[MoveColumn][MoveRow] = MoveType
-        Player = 2
+        if currentField[MoveColumn][MoveRow] == " ":
+            currentField[MoveColumn][MoveRow] = "X"
+            Player = 2
     else:
-        currentField[MoveColumn][MoveRow] = MoveType
-        Player = 1
-    print(currentField)
+        if currentField[MoveColumn][MoveRow] == " ":
+            currentField[MoveColumn][MoveRow] = "O"
+            Player = 1
+    drawFields(currentField)
